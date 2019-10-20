@@ -1,0 +1,37 @@
+{
+  "chargers": [
+    {
+      "id": 1,
+      "digit": "AAA1",
+      "location": "Oulu",
+      "name": "Kaakkuri Citymarket",
+      "type": "Slow",
+      "power_kw": 25,
+      "pricing_mode": "free",
+      "price_cents": 11.37,
+      "status": "free"
+    },
+    {
+      "id": 2,
+      "digit": "AAA2",
+      "location": "Tampere",
+      "name": "Lempeela Citymarket",
+      "type": "Fast",
+      "power_kw": 50,
+      "pricing_mode": "kwh",
+      "price_cents": 11,
+      "status": "taken"
+    },
+    {
+      "id": 3,
+      "digit": "AAA3",
+      "location": "Rovaniemi",
+      "name": "Joku Citymarket",
+      "type": "Slow",
+      "power_kw": 35,
+      "pricing_mode": "min",
+      "price_cents": 8,
+      "status": "free"
+    }
+  ]
+}
