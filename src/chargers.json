@@ -3,19 +3,21 @@
     {
       "id": 1,
       "digit": "AAA1",
-      "location": "Oulu",
-      "name": "Kaakkuri Citymarket",
+      "city": "Oulu",
+      "address": "Kasarmintie 6",
+      "name": "Oulun Energian toimitalon piha",
       "type": "Slow",
       "power_kw": 25,
       "pricing_mode": "free",
-      "price_cents": 11.37,
+      "price_cents": 0,
       "status": "free"
     },
     {
       "id": 2,
       "digit": "AAA2",
-      "location": "Tampere",
-      "name": "Lempeela Citymarket",
+      "city": "Oulu",
+      "address": "Metsokankaantie 5",      
+      "name": "K-Citymarket Oulu Kaakkuri",
       "type": "Fast",
       "power_kw": 50,
       "pricing_mode": "kwh",
@@ -25,13 +27,69 @@
     {
       "id": 3,
       "digit": "AAA3",
-      "location": "Rovaniemi",
-      "name": "Joku Citymarket",
+      "city": "Ii",
+      "address": "Piisilta 1",
+      "name": "Micropolis, parkkipaikka",
       "type": "Slow",
       "power_kw": 35,
       "pricing_mode": "min",
       "price_cents": 8,
       "status": "free"
+    },
+    {
+      "id": 4,
+      "digit": "AAA4",
+      "city": "Helsinki",
+      "address": "Elielinaukio",
+      "name": "P-Eliel",
+      "type": "Slow",
+      "power_kw": 35,
+      "pricing_mode": "min",
+      "price_cents": 8,
+      "status": "free"
+    },
+    {
+      "id": 5,
+      "digit": "AAA5",
+      "city": "Kemi",
+      "address": "Tietokatu 1",
+      "name": "Kosmos-rakennus",
+      "type": "Slow",
+      "power_kw": 35,
+      "pricing_mode": "min",
+      "price_cents": 8,
+      "status": "free"
+    },
+    {
+      "id": 6,
+      "digit": "AAA6",
+      "city": "Kuopio",
+      "address": "Kauppakatu 45",
+      "name": "Toriparkki",
+      "type": "Slow",
+      "power_kw": 35,
+      "pricing_mode": "min",
+      "price_cents": 8,
+      "status": "free"
+    },
+    {
+      "id": 7,
+      "digit": "AAA7",
+      "city": "Kurikka",
+      "address": "Keskuspuistikko",
+      "name": "Kurikan Lukio",
+      "type": "Slow",
+      "power_kw": 35,
+      "pricing_mode": "free",
+      "price_cents": 0,
+      "status": "free"
     }
+
+
+
+
+
+
+
   ]
 }

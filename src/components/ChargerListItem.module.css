@@ -1,0 +1,28 @@
+.tableRow
+{
+  display: table-row;
+  border: 1px solid black;
+}
+
+.tableCell
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+}
+
+.tableCellGreen
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  background-color: LightGreen;
+}
+
+.tableCellRed
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  background-color: OrangeRed;
+}

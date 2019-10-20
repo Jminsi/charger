@@ -47,6 +47,14 @@ class App extends React.Component {
 
 
 
+
+
+
+
+  searchFilterUpdate = (newValue) => {
+    this.setState({ searchFilter: newValue });
+  }
+
   getChargerInfo = (chargerId) => {
     return this.state.chargers.find(charger => charger.id === chargerId);
   }
@@ -66,6 +74,9 @@ class App extends React.Component {
             <ChargerList
               items={ this.state.chargers }
               userInfo={ this.state.userInfo }
+              searchFilter={ this.state.searchFilter }
+              onSearchFilterUpdate={ this.searchFilterUpdate }
+
               />
         } />
 

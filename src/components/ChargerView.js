@@ -9,15 +9,9 @@ export default function ChargerView(props) {
   return (
     <div>
         <button onClick={() => props.history.goBack()}>Back</button>
-            <h1>{ chargerData.location }</h1>
-            <h3>{ chargerData.type }</h3>
-            <h2>${ chargerData.price_cents }</h2>
-            <div>
-              <ul>
-                {/* chargerData.promos.map((promo, index) => <li key={index}>{promo}</li>) */}
-                { chargerData.type }
-              </ul>
-           </div>
+        <h1>Selected charger: { chargerData.location } / { chargerData.name }</h1>
+        <h3>Type: { chargerData.type } / { chargerData.power_kw }kW </h3>
+        <h3>Price: { chargerData.price_cents }</h3>
     </div>
   )
 }
