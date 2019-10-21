@@ -18,8 +18,7 @@ class App extends React.Component {
       chargers: data.chargers,
       searchFilter: "",
       listMode: "grid",
-      userInfo: {name: "fdsfsdf" }
-      /*null*/
+      userInfo: null
     }
   }
 

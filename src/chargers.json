@@ -57,7 +57,7 @@
       "type": "Slow",
       "power_kw": 35,
       "pricing_mode": "min",
-      "price_cents": 8,
+      "price_cents": 18,
       "status": "free"
     },
     {
@@ -68,7 +68,7 @@
       "name": "Toriparkki",
       "type": "Slow",
       "power_kw": 35,
-      "pricing_mode": "min",
+      "pricing_mode": "kwh",
       "price_cents": 8,
       "status": "free"
     },
