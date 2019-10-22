@@ -25,13 +25,13 @@ export default function ChargerListItem(props) {
           </div>
         ) }
 
-        { props.status == "free" ? (
+        { props.status == "Free" ? (
           <div className={ styles.tableCellGreen }> Free </div>
         ) : (
           <div className={ styles.tableCellRed }> Taken </div>
         ) }
 
-        { props.status == "free" ? (
+        { props.status == "Free" ? (
           <div className={ styles.tableCell }>
             <Link to={ `/charger/${props.id}` }> <button>Select</button> </Link>
           </div>

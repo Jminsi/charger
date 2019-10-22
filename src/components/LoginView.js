@@ -1,6 +1,7 @@
 import React from 'react';
 /* import Auth from './Auth'; */
 import { Link } from "react-router-dom";
+import styles from './LoginView.module.css';
 
 
 export default function LoginView(props) {
@@ -10,6 +11,8 @@ export default function LoginView(props) {
   {
 
     event.preventDefault();
+    console.log("calling props.loginSuccess();");
+    props.loginSuccess();
 /*    props.userInfo: "Jep"*/
 /*    Auth.authenticate(event.target['username'].value, event.target['password'].value)
       .then(result =>
@@ -21,7 +24,8 @@ export default function LoginView(props) {
         props.loginFail();
       })
       */
-    
+
+    props.history.push('/');
   }
 
 
@@ -31,23 +35,30 @@ export default function LoginView(props) {
     props.history.goBack();
   }
 
+  const divLeft = {
+    float: 'left',
+    border: '1px solid black'
+  }
 
   return (
     <div>
-      <h1>Charger user login</h1>
+      <h2>Electric car chargers user login</h2>
       <div>Please enter your login and password</div>
+      <br/>
       <form onSubmit={ login }>
-        <div>
-          Login: <input type="text" name="login" />
-        </div>
-        <div>
-          Password: <input type="text" name="password" />
-        </div>
-        <div>
-          <button type="submit">Login</button>
-          <Link to="/">
-            <button>Cancel</button>
-          </Link>
+        <div className={ styles.tableCell }>
+          <div className={ styles.tableRow }>
+            <div className={ styles.tableCell }> Login: </div>
+            <div className={ styles.tableCell }> <input type="text" name="login" /> </div>
+          </div>
+          <div className={ styles.tableRow }>
+            <div className={ styles.tableCell }> Password: </div>
+            <div className={ styles.tableCell }> <input type="password" name="password" /> </div>
+          </div>
+          <div className={ styles.tableRow }>
+            <div className={ styles.tableCell }> <br/>  <button type="submit">Login</button> </div>
+            <div className={ styles.tableCell }> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
+          </div>
         </div>
       </form>
     </div>
