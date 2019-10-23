@@ -1,5 +1,5 @@
 import React from 'react';
-/* import Auth from './Auth'; */
+import Auth from './Auth';
 import { Link } from "react-router-dom";
 import styles from './LoginView.module.css';
 
@@ -9,10 +9,26 @@ export default function LoginView(props) {
 
   function login(event)
   {
-
     event.preventDefault();
-    console.log("calling props.loginSuccess();");
+    Auth.authenticate(event.target['username'].value, event.target['password'].value)
+      .then(result =>
+        {
+//console.log('lgoin:' + result.data.chargers);
+          props.loginSuccess();
+          props.history.push('/');
+        })
+      .catch(() => {
+        /*props.loginFail();*/
+        
+      })
+
+
+/*    console.log("calling props.loginSuccess();");
     props.loginSuccess();
+    props.history.push('/');
+*/
+
+
 /*    props.userInfo: "Jep"*/
 /*    Auth.authenticate(event.target['username'].value, event.target['password'].value)
       .then(result =>
@@ -24,8 +40,6 @@ export default function LoginView(props) {
         props.loginFail();
       })
       */
-
-    props.history.push('/');
   }
 
 
@@ -43,13 +57,13 @@ export default function LoginView(props) {
   return (
     <div>
       <h2>Electric car chargers user login</h2>
-      <div>Please enter your login and password</div>
+      <div>Please enter your username and password</div>
       <br/>
       <form onSubmit={ login }>
         <div className={ styles.tableCell }>
           <div className={ styles.tableRow }>
-            <div className={ styles.tableCell }> Login: </div>
-            <div className={ styles.tableCell }> <input type="text" name="login" /> </div>
+            <div className={ styles.tableCell }> Username: </div>
+            <div className={ styles.tableCell }> <input type="text" name="username" /> </div>
           </div>
           <div className={ styles.tableRow }>
             <div className={ styles.tableCell }> Password: </div>
