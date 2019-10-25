@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import styles from './RegisterView.module.css';
 
 
 export default function RegisterView(props) {
@@ -11,7 +10,7 @@ export default function RegisterView(props) {
     event.preventDefault();
     props.registerUser(
       event.target['full_name'].value,
-      event.target['login'].value,
+      event.target['username'].value,
       event.target['password'].value
     );
     props.history.goBack();
@@ -21,25 +20,25 @@ export default function RegisterView(props) {
   return (
     <div>
       <h2>Electric car chargers user register</h2>
-      <div>Please enter your full name, login and password</div>
+      <div>Please enter your full name, username and password</div>
       <br/>
       <form onSubmit={ register }>
-        <div className={ styles.tableCell }>
-          <div className={ styles.tableRow }>
-            <div className={ styles.tableCell }> Full name: </div>
-            <div className={ styles.tableCell }> <input type="text" name="full_name" /> </div>
+        <div className="tableCellNoBorder">
+          <div className="tableRow">
+            <div className="tableCellNoBorder"> Full name: </div>
+            <div className="tableCellNoBorder"> <input type="text" name="full_name" /> </div>
           </div>
-          <div className={ styles.tableRow }>
-            <div className={ styles.tableCell }> Login: </div>
-            <div className={ styles.tableCell }> <input type="text" name="login" /> </div>
+          <div className="tableRow">
+            <div className="tableCellNoBorder"> Username: </div>
+            <div className="tableCellNoBorder"> <input type="text" name="username" /> </div>
           </div>
-          <div className={ styles.tableRow }>
-            <div className={ styles.tableCell }> Password: </div>
-            <div className={ styles.tableCell }> <input type="password" name="password" /> </div>
+          <div className="tableRow">
+            <div className="tableCellNoBorder"> Password: </div>
+            <div className="tableCellNoBorder"> <input type="password" name="password" /> </div>
           </div>
-          <div className={ styles.tableRow }>
-            <div className={ styles.tableCell }> <br/>  <button type="submit">Register</button> </div>
-            <div className={ styles.tableCell }> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
+          <div className="tableRow">
+            <div className="tableCellNoBorder"> <br/>  <button type="submit">Register</button> </div>
+            <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
           </div>
         </div>
       </form>
