@@ -1,0 +1,25 @@
+body
+{
+  background-color: Beige;
+}
+
+.table
+{
+  display: table;
+  border: 1px solid black;
+/*  width: 0%;*/
+}
+
+.tableCell
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  font-weight: bold;
+
+}
+
+.tableRow
+{
+  display: table-row;
+}
