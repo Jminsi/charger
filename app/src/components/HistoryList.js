@@ -24,8 +24,8 @@ export default function HistoryList(props) {
           <div className="tableCellBold"> Charger location </div>
           <div className="tableCellBold"> Charger type </div>
           <div className="tableCellBold"> Charging time </div>
-          <div className="tableCellBold"> Energy </div>
-          <div className="tableCellBold"> Cost </div>
+          <div className="tableCellBold"> Energy charged </div>
+          <div className="tableCellBold"> Charging cost </div>
         </div>
       {
 /*

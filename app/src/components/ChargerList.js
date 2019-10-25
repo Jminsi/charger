@@ -1,7 +1,7 @@
 import React from 'react';
 import ChargerListItem from './ChargerListItem';
 import { Link } from "react-router-dom";
-import styles from './ChargerList.module.css';
+
 
 export default function ChargerList(props) {
 
@@ -19,9 +19,17 @@ export default function ChargerList(props) {
   }
 
 
+  function openHistory(event)
+  {
+    event.preventDefault();
+    props.getUserHistory();
+    props.history.push('/history');
+  }
+
+
   return (
     <div>
-      { props.userInfo == null ? (
+      { props.userFullName == null ? (
           <div>
             Hello visitor! {' '} <Link to="/login"><button>Login</button></Link>   <Link to="/register"><button>Register</button></Link>      <br/>
             You must login to use chargers. <br/>
@@ -29,8 +37,8 @@ export default function ChargerList(props) {
             </div>
         ) : (
           <div>
-            Hello { props.userInfo.full_name } ! <button onClick={logout}>Logout</button> <br/>
-            <Link to="/history"><button>Charging history</button></Link>
+            Hello { props.userFullName } ! <button onClick={logout}>Logout</button> <br/>
+            <button onClick={openHistory}>Show charging history</button> 
           </div>      
         )
       }
@@ -41,15 +49,18 @@ export default function ChargerList(props) {
         (Type charger city/address or charger name)
       </div>
       <br/>
-      <div className={ styles.table }>
-        <div className={ styles.tableRow }>
-          <div className={ styles.tableCell }> City </div>
-          <div className={ styles.tableCell }> Address </div>
-          <div className={ styles.tableCell }> Name </div>
-          <div className={ styles.tableCell }> Type </div>
-          <div className={ styles.tableCell }> Price </div>
-          <div className={ styles.tableCell }> Status </div>
-          <div className={ styles.tableCell }> </div>
+      <div className="table">
+        <div className="tableRow">
+          <div className="tableCellBold"> City </div>
+          <div className="tableCellBold"> Address </div>
+          <div className="tableCellBold"> Name </div>
+          <div className="tableCellBold"> Type </div>
+          <div className="tableCellBold"> Price </div>
+          <div className="tableCellBold"> Status </div>
+          { /* Add last column only if user has login */
+            props.userFullName != null &&
+              <div className="tableCell"> </div>
+          }
         </div>
       {
         props.items
@@ -57,7 +68,7 @@ export default function ChargerList(props) {
             item.city.toLowerCase().includes(props.searchFilter.toLowerCase())    || 
             item.address.toLowerCase().includes(props.searchFilter.toLowerCase()) ||
             item.name.toLowerCase().includes(props.searchFilter.toLowerCase())
-          ).map(item => <ChargerListItem key={item.id} {...item} />
+          ).map(item => <ChargerListItem key={item.id} {...item} userFullName={props.userFullName} />
         )
       }
       </div>    

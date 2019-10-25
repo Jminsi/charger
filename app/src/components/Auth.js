@@ -8,8 +8,9 @@ let userInfo = {
 
 let myAuth = {
     authenticate: (username, password) => {      
+      console.log('authenticate()');
       return new Promise((resolve, reject) => {
-        axios.get(constants.baseAddress + '/users/'+username, 
+        axios.get(constants.baseAddress + '/users/login', 
           {
               auth: {
               username: username,
@@ -21,7 +22,7 @@ let myAuth = {
               username: username,
               password: password
             }
-            resolve();
+            resolve(result.data.full_name);
           })
           .catch(error => 
             {
@@ -31,6 +32,7 @@ let myAuth = {
           )
       });
     },
+
     getAxiosAuth: () => {
       return {
         auth: userInfo

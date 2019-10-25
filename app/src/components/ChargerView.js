@@ -6,52 +6,65 @@ export default function ChargerView(props) {
   
   const chargerData = props.getChargerInfo(parseInt(props.match.params.id));
 
-
-  /* Just counter to simulate charged energy according elapsed time (we do not have actual charger where to measure) */
-  let charged_energy_kw = (props.chargingSecs * 0.3).toFixed(0);
-
-  /* Create price text charger info, depends from pricing mode */
-  let price_text = "Free";
-  if(chargerData.pricing_mode == "min") {
-    price_text = (chargerData.price_cents/100) + " e/min"
-  } else if(chargerData.pricing_mode == "kwh") {
-     price_text = chargerData.price_cents + " c/kWh"
+  /* Create price text for charger info, depends from pricing mode */
+  let priceText = "Free";
+  if(chargerData.pricing_mode === "min") {
+    priceText = (chargerData.price_cents/100) + " e/min"
+  } else if(chargerData.pricing_mode === "kwh") {
+     priceText = chargerData.price_cents + " c/kWh"
   }
 
 
-  let cost_text = 0;
-  if(chargerData.pricing_mode == "min") {
-    cost_text = ((chargerData.price_cents * (props.chargingSecs/60))/100).toFixed(2)  + " e"
-  } else if(chargerData.pricing_mode == "kwh") {
-     cost_text = (chargerData.price_cents * charged_energy_kw) + " c"
+  /* Calculate current charging energy amount. Because we do not have actual charger where to measure, we just use 0.3 multiplier to simulate charging. */
+  let chargedEnergyKw = (props.chargingSecs * 0.3).toFixed(0);
+
+
+  /* Calculate current charging costs in cents */
+  let chargedCostCents = 0;
+  if(chargerData.pricing_mode === "min") {
+    chargedCostCents = ( (chargerData.price_cents/60) * props.chargingSecs).toFixed(0)
+  } else if(chargerData.pricing_mode === "kwh") {
+     chargedCostCents = (chargerData.price_cents * chargedEnergyKw)
   }
 
 
-
-
-  function startCharging(event)
-  {    
+  /* Starts charging if charger digit code is correct */
+  function startCharging(event) {    
     event.preventDefault();
-    props.startTimer();
+    props.resetChargingSecs();
+    if(event.target['digit'].value == chargerData.digit) {
+      props.startTimer();
+    } else {
+      alert("Wrong charger digit, charging not started!");
+    }
   }
 
-  function stopCharging(event)
-  {    
+
+  /* Stops charging and saves charging to user history */
+  function stopCharging(event) {    
     event.preventDefault();
     props.stopTimer();
-   //TODO ZERO does not work, add also reset when using back button
-    cost_text = 0;
+    props.saveChargeToHistory(chargerData.id, 'aikaleima', props.chargingSecs, chargedEnergyKw, chargedCostCents);
   }
 
 
-  
+  /* If user press "Back" button and there is still charging ongoing then stops charging and saves chaging to user history */
+  function goBack(event) {
+    event.preventDefault();
+    if(props.chargingOngoing == true) {
+      console.log('GO BACK WHILE CHARGINGGNG');
+       props.stopTimer();
+       props.resetChargingSecs();
+    }
+    props.history.push('/')
+  }
 
 
   return (
     <div>
-      <button onClick={() => props.history.goBack()}>Back</button>
+      <button onClick={ goBack }>Back</button>
       <h2>Charging operation</h2>
-      Selected charger info:
+      Selected charger info: ID: {chargerData.id}
       <div className="table">
         <div className="tableRow">
           <div className="tableCellBold"> Charger: </div>
@@ -63,50 +76,59 @@ export default function ChargerView(props) {
         </div>
         <div className="tableRow">
           <div className="tableCellBold"> Price: </div>
-           <div className="tableCell">  { price_text } </div>
+           <div className="tableCell">  { priceText } </div>
         </div>
       </div>
 
-
-
       <br/>
-      To start charging, please see four digits code from the charging station and <br/>enter it to field below, then click "Start charging" button.
+      To start charging, please see four digits code from the charging station and <br/>enter it to field below, then click "Start charging" button.<br/>
+      When charging is done, click "Stop charging" button. <br/>
+      Also pressing "Back" button will stop charging.
       <form onSubmit={ startCharging }>
         <div className="tableCellNoBorder">
           <div className="tableRow">
             <div className="tableCellNoBorder"> Charger four digits: </div>
-            <div className="tableCellNoBorder"> <input type="text" name="digit" /> </div>
+            <div className="tableCellNoBorder"> <input type="text" name="digit" readOnly={props.chargingOngoing} /> </div>
           </div>
-          
           <div className="tableRow">
-            <div className="tableCellNoBorder"> <br/>  <button type="submit">Start charging</button> </div>
-            <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
+            <div className="tableCellNoBorder">  </div>
+            <div className="tableCellNoBorder"> (NOTE! In real life you see digits: {chargerData.digit} in real charger. Enter these digits to field above.) </div>
+          </div>         
+          <div className="tableRow">
+            <div className="tableCellNoBorder"> <br/>            
+              { props.chargingOngoing == false ? (
+                <button type="submit">Start charging</button>
+              ) : (
+                <button onClick={stopCharging}>Stop charging</button> 
+              )}            
+            </div>                      
+            <div className="tableCellNoBorder">  </div>
           </div>
         </div>
       </form>
 
       <br/>
-      Charging process info:
-      <div className="table">
-        <div className="tableRow">
-          <div className="tableCellBold"> Charging time: </div>
-          <div className="tableCell"> { props.chargingSecs } sec </div>
-        </div>
-        <div className="tableRow">
-          <div className="tableCellBold"> Charged energy: </div>
-           <div className="tableCell"> { charged_energy_kw  } kWh </div>
-        </div>
-        <div className="tableRow">
-          <div className="tableCellBold"> Cost: </div>
-           <div className="tableCell"> { cost_text } </div>
-        </div>
-      </div>
 
-
-
-<button onClick={startCharging}>Start</button> 
-<button onClick={stopCharging}>Stop</button> 
-      
+      { (props.chargingOngoing == true || props.chargingSecs > 0)  &&
+        <div>
+        Charging process info:
+        <div className="table">
+          <div className="tableRow">
+            <div className="tableCellBold"> Charging time: </div>
+            <div className="tableCell"> { props.chargingSecs } sec </div>
+          </div>
+          <div className="tableRow">
+            <div className="tableCellBold"> Charged energy: </div>
+             <div className="tableCell"> { chargedEnergyKw  } kWh </div>
+          </div>
+          <div className="tableRow">
+            <div className="tableCellBold"> Cost: </div>
+             <div className="tableCell"> { (chargedCostCents/100).toFixed(2) } e </div>
+          </div>
+        </div>
+        </div>
+      }
+     
     </div>
   )
 }
