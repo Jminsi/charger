@@ -19,7 +19,7 @@ class App extends React.Component {
       chargers: [],
       history: [],
       searchFilter: "",
-      userFullName: 'null',
+      userFullName: null,
       chargingOngoing: false,
       chargingSecs: 0      
     }
@@ -142,13 +142,18 @@ class App extends React.Component {
     console.log('saveChargeToHistory(): id=' + chargerId + ' ts=' + timeStamp + '  sec=' + chargingTimeSecs + ' kwh=' + chargedEnergyKwh + ' cost=' + costCents );
 
 //     axios.get(constants.baseAddress + '/users/history', Auth.getAxiosAuth()).then(results => {
+
+
+
     axios.post(constants.baseAddress + '/users/savehistory', {
       charger_id: chargerId,
       time: timeStamp,
       charging_time_secs: chargingTimeSecs,
       charged_energy_kwh: chargedEnergyKwh,
       cost_cents: costCents
-    })
+    },
+    Auth.getAxiosAuth()
+    )
     .then(function (response) {
       console.log(response);
     })

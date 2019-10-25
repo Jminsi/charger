@@ -44,7 +44,8 @@ export default function ChargerView(props) {
   function stopCharging(event) {    
     event.preventDefault();
     props.stopTimer();
-    props.saveChargeToHistory(chargerData.id, 'aikaleima', props.chargingSecs, chargedEnergyKw, chargedCostCents);
+    let d = new Date();
+    props.saveChargeToHistory(chargerData.id, d.toLocaleString('en-GB'), props.chargingSecs, chargedEnergyKw, chargedCostCents);
   }
 
 

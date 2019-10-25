@@ -135,13 +135,18 @@ app.get('/users/history',
 
 
 
-app.post('/users/savehistory', (req, res) => {
-  console.log('/users/savehistory ' + req.body.charger_id +' '+ req.body.time);
+
+
+
+app.post('/users/savehistory', 
+  passport.authenticate('basic', { session: false }),
+  (req, res) => {
+  console.log('/users/savehistory uid=' + req.user.id + ' cid=' + req.body.charger_id + 'time=' + req.body.time + ' ctime=' + req.body.charging_time_secs + ' kwh='+ req.body.charged_energy_kwh + ' cost=' + req.body.cost_cents);
   //id | user_id | charger_id | time                | charging_time_secs | charged_energy_kwh | cost_cents
-  db.query('INSERT INTO history(user_id, charger_id, time, charging_time_secs, charged_energy_kwh, cost_cents) VALUES (?,?,?,?,?,?)', [1, req.body.charger_id,
+  db.query('INSERT INTO history(user_id, charger_id, time, charging_time_secs, charged_energy_kwh, cost_cents) VALUES (?,?,?,?,?,?)', [req.user.id, req.body.charger_id,
     req.body.time, req.body.charging_time_secs, req.body.charged_energy_kwh, req.body.cost_cents])
   .then(results => {
-    console.log(results);
+    //console.log(results);
     res.sendStatus(201);
   })
   .catch(() => {
