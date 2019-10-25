@@ -1,0 +1,52 @@
+body
+{
+  background-color: Beige;
+}
+
+.table
+{
+  display: table;
+  border: 1px solid black;
+}
+
+.tableRow
+{
+  display: table-row;
+}
+
+.tableCell
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+}
+
+.tableCellNoBorder
+{
+  display: table-cell;
+  padding: 4px;
+}
+
+.tableCellBold
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  font-weight: bold;
+}
+
+.tableCellGreen
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  background-color: LightGreen;
+}
+
+.tableCellRed
+{
+  display: table-cell;
+  border: 1px solid black;
+  padding: 4px;
+  background-color: OrangeRed;
+}
