@@ -5,15 +5,6 @@ import { Link } from "react-router-dom";
 
 export default function HistoryList(props) {
 
-
-
-
-//  console.log('hep');
-  //let userHistory = 
-  //props.getHistory();
-//  console.log(userHistory);
-  console.log('ffff=' + props.history);
-
   return (
     <div>
       <Link to="/"><button>Go back</button></Link>
@@ -28,18 +19,7 @@ export default function HistoryList(props) {
           <div className="tableCellBold"> Charging cost </div>
         </div>
       {
-/*
-        props.history.map((item) => 
-        <div className="tableRow">
-        <div className="tableCell">{item.time}</div>
-        <div className="tableCell"> { props.getChargerInfo(parseInt(item.charger_id)).city }, { props.getChargerInfo(parseInt(item.charger_id)).address }, { props.getChargerInfo(parseInt(item.charger_id)).name } </div>
-        <div className="tableCell"> { props.getChargerInfo(parseInt(item.charger_id)).type } { props.getChargerInfo(parseInt(item.charger_id)).power_kw } kW </div>
-        <div className="tableCell"> {item.charging_time_secs} sec </div>
-        <div className="tableCell"> {item.charged_energy_kwh} kWh </div>
-        <div className="tableCell"> {item.cost_cents} c </div>
-        </div>
-        )
-*/
+
         props.history.map((item) =>
           <HistoryListItem key={item.id} item={item} charger={props.getChargerInfo(parseInt(item.charger_id))} />
         )

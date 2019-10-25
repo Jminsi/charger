@@ -37,16 +37,6 @@ class App extends React.Component {
       console.error(error);
     })
 
-    //TODO remove when this works
-    /*
-    axios.get(constants.baseAddress + '/users/historyy').then(result => {
-      this.setState({ history: result.data.history });
-      console.log('componentDidMount() history:' + result.data.history);      
-    })
-    .catch(error => {
-      console.error(error);
-    })
-    */
   }
 
 
@@ -75,17 +65,6 @@ class App extends React.Component {
   }
 
 
-/*
-  getUserHistory = () => {
-    axios.get(constants.baseAddress + '/users/historyy').then(result => {
-      this.setState({ history: result.data.history });
-      console.log('componentDidMount() history:' + result.data.history);      
-    })
-    .catch(error => {
-      console.error(error);
-    })
-  }
-*/
 
   /* Called during user login, saves users full name */
   onLogin = (userFullNameFromApi) => {
@@ -140,10 +119,6 @@ class App extends React.Component {
   /* Saves charge information  to users history */
   saveChargeToHistory = (chargerId, timeStamp, chargingTimeSecs, chargedEnergyKwh, costCents) => {
     console.log('saveChargeToHistory(): id=' + chargerId + ' ts=' + timeStamp + '  sec=' + chargingTimeSecs + ' kwh=' + chargedEnergyKwh + ' cost=' + costCents );
-
-//     axios.get(constants.baseAddress + '/users/history', Auth.getAxiosAuth()).then(results => {
-
-
 
     axios.post(constants.baseAddress + '/users/savehistory', {
       charger_id: chargerId,

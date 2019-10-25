@@ -10,7 +10,7 @@ export default function HistoryListItem(props) {
       <div className="tableCell">{ props.charger.type } { props.charger.power_kw } kW</div>
       <div className="tableCell">{props.item.charging_time_secs} sec</div>
       <div className="tableCell">{props.item.charged_energy_kwh} kWh</div>
-      <div className="tableCell">{props.item.cost_cents} c</div>
+      <div className="tableCell">{(props.item.cost_cents/100).toFixed(2)} e</div>
     </div>
   )
 }

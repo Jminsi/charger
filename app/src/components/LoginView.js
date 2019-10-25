@@ -16,9 +16,8 @@ export default function LoginView(props) {
           props.history.push('/');
         })
       .catch(() => {
-      console.log('login failed');
-//TODO FIX THIS
-//        props.loginFail();
+        console.log('login failed');
+        alert("Wrong charger digit, charging not started!");
         props.history.push('/login');
       })    
   }

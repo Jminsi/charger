@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 
 export default function ChargerView(props) {
@@ -32,7 +32,7 @@ export default function ChargerView(props) {
   function startCharging(event) {    
     event.preventDefault();
     props.resetChargingSecs();
-    if(event.target['digit'].value == chargerData.digit) {
+    if(event.target['digit'].value === chargerData.digit) {
       props.startTimer();
     } else {
       alert("Wrong charger digit, charging not started!");
@@ -52,11 +52,12 @@ export default function ChargerView(props) {
   /* If user press "Back" button and there is still charging ongoing then stops charging and saves chaging to user history */
   function goBack(event) {
     event.preventDefault();
-    if(props.chargingOngoing == true) {
-      console.log('GO BACK WHILE CHARGINGGNG');
+    if(props.chargingOngoing === true) {
        props.stopTimer();
-       props.resetChargingSecs();
+       let d = new Date();
+       props.saveChargeToHistory(chargerData.id, d.toLocaleString('en-GB'), props.chargingSecs, chargedEnergyKw, chargedCostCents);
     }
+    props.resetChargingSecs();
     props.history.push('/')
   }
 
@@ -65,7 +66,7 @@ export default function ChargerView(props) {
     <div>
       <button onClick={ goBack }>Back</button>
       <h2>Charging operation</h2>
-      Selected charger info: ID: {chargerData.id}
+      Selected charger info:
       <div className="table">
         <div className="tableRow">
           <div className="tableCellBold"> Charger: </div>
@@ -97,7 +98,7 @@ export default function ChargerView(props) {
           </div>         
           <div className="tableRow">
             <div className="tableCellNoBorder"> <br/>            
-              { props.chargingOngoing == false ? (
+              { props.chargingOngoing === false ? (
                 <button type="submit">Start charging</button>
               ) : (
                 <button onClick={stopCharging}>Stop charging</button> 
@@ -110,7 +111,7 @@ export default function ChargerView(props) {
 
       <br/>
 
-      { (props.chargingOngoing == true || props.chargingSecs > 0)  &&
+      { (props.chargingOngoing === true || props.chargingSecs > 0)  &&
         <div>
         Charging process info:
         <div className="table">

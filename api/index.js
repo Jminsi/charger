@@ -20,26 +20,29 @@ passport.use(new Strategy((username, password, cb) => {
     {
       return cb(null, false);
     }
-    console.log('passport.use() username=' + username + ' password=' + password);
-    if(password == dbResults[0].password) {
+    //console.log('passport.use() username=' + username + ' password=' + password);
+
+    /*
+    if(password == dbResults[0].password)) {
       cb(null, { id: dbResults[0].id, username: dbResults[0].username, full_name: dbResults[0].full_name });
     } else {
       return cb(null, false);
     }
+    */
 
-//TODO FIX THIS
-/*
     bcrypt.compare(password, dbResults[0].password).then(bcryptResult => {
       if(bcryptResult == true)
       {
-        cb(null, dbResults[0]);
+        //cb(null, dbResults[0]);
+        cb(null, { id: dbResults[0].id, username: dbResults[0].username, full_name: dbResults[0].full_name });
       }
       else
       {
         return cb(null, false);
       }
     })
-    */
+
+
 
   }).catch(dbError => cb(err))
 }));
@@ -66,19 +69,20 @@ app.get('/users/login',
 */
 app.post('/users/register', (req, res) => {
   console.log('/users/register ' + req.body.full_name +' '+ req.body.username +' '+ req.body.password);
-/*
-TODO
-    bcrypt.hash(password, saltRounds).then(hash =>
-      db.query('INSERT INTO users (username, password) VALUES (?,?)', [username, hash])
+
+    bcrypt.hash(req.body.password, saltRounds).then(hash =>
+      db.query('INSERT INTO users (full_name, username, password) VALUES (?,?,?)', [req.body.full_name, req.body.username, hash])
     )
     .then(dbResults => {
         console.log(dbResults);
         res.sendStatus(201);
     })
     .catch(error => res.sendStatus(500));
-*/
 
-  db.query('INSERT INTO users(full_name, username, password) VALUES (?,?,?)', [req.body.full_name, req.body.username, req.body.password])
+
+  /*
+  let hash = bcrypt.hashSync(req.body.password, saltRounds);
+  db.query('INSERT INTO users(full_name, username, password) VALUES (?,?,?)', [req.body.full_name, req.body.username, req.body.password,])
   .then(results => {
     console.log(results);
     res.sendStatus(201);
@@ -86,6 +90,8 @@ TODO
   .catch(() => {
     res.sendStatus(500);
   });    
+  */
+
 });
 
 
@@ -100,18 +106,7 @@ app.get('/chargers', (req, res) => {
 });
 
 
-/* Returns charger info list */
-/* TODO REMOVE WHEN NOT NEEDED
-app.get('/users/historyy', (req, res) => { 
-    console.log('app.get(/users/historyy');
-    db.query('SELECT * FROM history').then(results => {
-        res.json({ history: results})
-    }).catch(() => {
-        res.sendStatus(500);
-    })
-});
-*/
-
+/* Returns users charging history */
 app.get('/users/history',
   passport.authenticate('basic', { session: false }),
   (req, res) => {
@@ -123,21 +118,11 @@ app.get('/users/history',
       res.sendStatus(500);
     })
 
-/*
-  console.log('app.get(/users/login req.user.id=' + req.user.id);
-  console.log('app.get(/users/login req.user.full_name=' + req.user.full_name);
-  console.log('app.get(/users/login req.user.username=' + req.user.username);
-  //Send back user full name        
-  res.json( { full_name: req.user.full_name } );
-  */
+  
 });
 
 
-
-
-
-
-
+/* Saves users charge history */
 app.post('/users/savehistory', 
   passport.authenticate('basic', { session: false }),
   (req, res) => {
@@ -155,61 +140,7 @@ app.post('/users/savehistory',
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Example how to use authenticated user, user ID can be always found from req.user.id when doing
-   DB actions etc. */
-app.get('/hello-protected',
-        passport.authenticate('basic', { session: false }),
-        (req, res) => res.send('Hello Protected World!' + req.user.id));
-
-
-
-
-
-
-
-
-
-/*
-app.post('/users', (req, res) => {
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-
-  if((typeof username === "string") &&
-     (username.length > 4) &&
-     (typeof password === "string") &&
-     (password.length > 6))
-  {
-    bcrypt.hash(password, saltRounds).then(hash =>
-      db.query('INSERT INTO users (username, password) VALUES (?,?)', [username, hash])
-    )
-    .then(dbResults => {
-        console.log(dbResults);
-        res.sendStatus(201);
-    })
-    .catch(error => res.sendStatus(500));
-  }
-  else {
-    console.log("incorrect username or password, both must be strings and username more than 4 long and password more than 6 characters long");
-    res.sendStatus(400);
-  }
-})
-*/
-
 /* DB init */
-
 Promise.all(
   [
 /*
