@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 export default function RegisterView(props) {
 
 
-  function register(event)
-  {
+  function register(event) {
     event.preventDefault();
     props.registerUser(
       event.target['full_name'].value,

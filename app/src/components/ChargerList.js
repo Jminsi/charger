@@ -6,40 +6,30 @@ import { Link } from "react-router-dom";
 export default function ChargerList(props) {
 
 
-  function updateSearchFilter(event)
-  {
+  function updateSearchFilter(event) {
     props.onSearchFilterUpdate(event.target.value)
   }
 
 
-  function logout(event)
-  {
+  function logout(event) {
     event.preventDefault();    
     props.userLogout();
   }
 
 
-  function openHistory(event)
-  {
-    event.preventDefault();
-    props.getUserHistory();
-    props.history.push('/history');
-  }
-
-
   return (
     <div>
-      { props.userFullName == null ? (
+
+      { /* If user has not login (userFullName is null) then show login and register buttons, otherwise show logout button */
+        props.userFullName == null ? (
           <div>
-            Hello visitor! {' '} <Link to="/login"><button>Login</button></Link>   <Link to="/register"><button>Register</button></Link>      <br/>
-            You must login to use chargers. <br/>
-            If you do not have account, please register at first.
-            </div>
+            Hello visitor! {' '} <Link to="/login"><button>Login</button></Link>   <Link to="/register"><button>Register</button></Link>  <br/>
+            You must login. If you do not have account, please register at first.
+          </div>
         ) : (
           <div>
             Hello { props.userFullName } ! <button onClick={logout}>Logout</button> <br/>
-            <button onClick={openHistory}>Show charging history</button> 
-          </div>      
+          </div>
         )
       }
 
@@ -57,20 +47,19 @@ export default function ChargerList(props) {
           <div className="tableCellBold"> Type </div>
           <div className="tableCellBold"> Price </div>
           <div className="tableCellBold"> Status </div>
-          { /* Add last column only if user has login */
-            props.userFullName != null &&
-              <div className="tableCell"> </div>
-          }
         </div>
+
       {
-        props.items
+        /* Filter charger matching to search filter, using lowercase comparison for city, address and name */
+        props.chargers
           .filter(item => 
             item.city.toLowerCase().includes(props.searchFilter.toLowerCase())    || 
             item.address.toLowerCase().includes(props.searchFilter.toLowerCase()) ||
             item.name.toLowerCase().includes(props.searchFilter.toLowerCase())
-          ).map(item => <ChargerListItem key={item.id} {...item} userFullName={props.userFullName} />
+          ).map(item => <ChargerListItem key={item.id} {...item} />
         )
       }
+
       </div>    
     </div>
   )

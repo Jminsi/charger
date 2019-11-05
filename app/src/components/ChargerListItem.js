@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
 
 export default function ChargerListItem(props) {
 
+  //Crete charger price text for table row
   let price_text = "???";
   if(props.pricing_mode === "min") {
     price_text = (props.price_cents/100) + " e/min"
@@ -17,25 +17,25 @@ export default function ChargerListItem(props) {
         <div className="tableCell"> { props.address } </div>
         <div className="tableCell"> { props.name } </div>
         <div className="tableCell"> { props.type } { props.power_kw }kW </div>
-        { props.pricing_mode === "free" ? (
+
+
+        { /* If price mode is free, then show price column in green color with 'Free' text, otherwise show actual price */
+          props.pricing_mode === "free" ? (
           <div className="tableCellGreen"> Free </div>
         ) : (
           <div className="tableCell"> { price_text }
           </div>
         ) }
 
-        { (props.status === "Free") ? (
+
+        { /* If Charger is not taken (=free) then show status column in green color, if charger is taken show in red color */
+          (props.status === "Free") ? (
           <div className="tableCellGreen"> Free </div>
         ) : (
           <div className="tableCellRed"> Taken </div>
-        ) }
+        ) }        
 
-        { /* Add select button only if charger is free and user has login */
-          props.status === "Free" &&  props.userFullName != null &&
-          <div className="tableCell">
-            <Link to={ `/charger/${props.id}` }> <button>Select</button> </Link>
-          </div>
-        }
+
       </div>
   )
 }

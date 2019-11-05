@@ -6,18 +6,17 @@ import { Link } from "react-router-dom";
 export default function LoginView(props) {
 
 
-  function login(event)
-  {    
+  function login(event) {    
     event.preventDefault();    
     Auth.authenticate(event.target['username'].value, event.target['password'].value)
       .then(result =>
-        { /*If login is succesfull, then rResult contains user full name */
+        { /*If login is succesfull, then result contains user full name which is saved through loginSucces function */
           props.loginSuccess(result);
           props.history.push('/');
         })
       .catch(() => {
-        console.log('login failed');
-        alert("Wrong charger digit, charging not started!");
+        /* Login failed show error popup */
+        alert("Login failed, wrong password or username!");
         props.history.push('/login');
       })    
   }
